@@ -1,6 +1,6 @@
 import { usePortfolioData, useShareData } from "@/hooks/portfolios";
 import { StockList } from "@/types/types";
-import React, { use } from "react";
+import React, { FC, use } from "react";
 import {
   PieChart,
   Pie,
@@ -35,11 +35,15 @@ const createPieChartData = (
   return data;
 };
 
+const formatter = (value: number, name: string, props: any[]) => {
+  let formattedName = name;
+  let formattedValue = "$" + String(value);
+  return [formattedValue, formattedName, props];
+};
+
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const RADIAN = Math.PI / 180;
-
-// const CustomLabel: React.FC<any> =
 
 const StockPieChart: React.FC = () => {
   const { portfolioData } = usePortfolioData();
@@ -62,7 +66,7 @@ const StockPieChart: React.FC = () => {
             percent,
             index,
           }) => {
-            const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+            const radius = innerRadius + (outerRadius - innerRadius) * 0.1;
             const x = cx + radius * Math.cos(-midAngle * RADIAN);
             const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -73,6 +77,7 @@ const StockPieChart: React.FC = () => {
                 fill="white"
                 textAnchor={x > cx ? "start" : "end"}
                 dominantBaseline="central"
+                className="text-[16px]"
               >
                 ${data[index].value.toFixed(2)}
               </text>
@@ -87,7 +92,12 @@ const StockPieChart: React.FC = () => {
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-        <Tooltip></Tooltip>
+        <Tooltip
+          formatter={(value: number, name: string) => [
+            `$${value.toFixed(2)}`,
+            name,
+          ]}
+        ></Tooltip>
         <Legend
           iconType="square"
           align="right"
@@ -98,7 +108,7 @@ const StockPieChart: React.FC = () => {
             left: "300px",
             bottom: "50px",
             display: "inline-block",
-            fontSize: "20px",
+            fontSize: "22px",
           }}
         />
       </PieChart>

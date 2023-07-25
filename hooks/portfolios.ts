@@ -29,6 +29,7 @@ export function useShareData() {
     const userMap: Map<string, number> = new Map([
       ["GOOG", 2.3],
       ["AAPL", 1.6],
+      ["TSLA", 3],
     ]);
     setUserShares(userMap);
   }, []);

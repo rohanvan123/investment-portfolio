@@ -10,7 +10,7 @@ const DashboardModule: FC<PropsWithChildren<DashboardModuleProps>> = ({
 }) => {
   return (
     <div
-      className={`w-[500px] h-[300px] border-black border-[2px] rounded-[5px] mt-[60px] ml-[50px] ${className}`}
+      className={`w-[500px] h-[300px] border-black border-[2px] rounded-[5px] mt-[60px] ml-[100px] ${className}`}
     >
       {children}
     </div>
