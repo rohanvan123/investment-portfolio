@@ -17,12 +17,18 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         >
           <MenuIcon color="black" />
         </button>
-        <div className="text-[50px] mt-[20px] ml-[90px] font-bold">
+        <div className="text-[30px] mb-[20px] ml-[70px] font-bold">
           Welcome, Rohan
         </div>
         {children}
       </main>
-      {showNav && <SideNavBar showNav={showNav} setShowNav={setShowNav} />}
+      <SideNavBar
+        showNav={showNav}
+        setShowNav={setShowNav}
+        className={`h-screen bg-white z-50 absolute top-0 left-0 w-0 transition-all ${
+          showNav ? "w-[300px] duration-500" : "hidden"
+        }`}
+      />
     </div>
   );
 };

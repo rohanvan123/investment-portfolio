@@ -5,5 +5,15 @@ export interface StockDataPoint {
 
 export interface StockList {
   tickerName: string;
-  shares: StockDataPoint[];
+  sharePrices: StockDataPoint[];
+}
+
+export interface ChartProps {
+  portfolioData: StockList[];
+  userShares: Map<string, number>;
+}
+
+export interface DataEntry {
+  name: string;
+  value: number;
 }

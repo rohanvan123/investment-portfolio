@@ -14,5 +14,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  corePlugins: {
+    transitionProperty: true
+  },
 }

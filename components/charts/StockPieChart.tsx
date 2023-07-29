@@ -1,5 +1,5 @@
 import { usePortfolioData, useShareData } from "@/hooks/portfolios";
-import { StockList } from "@/types/types";
+import { ChartProps, StockList } from "@/types/types";
 import React, { FC, use } from "react";
 import {
   PieChart,
@@ -24,7 +24,8 @@ const createPieChartData = (
   for (let i = 0; i < portfolioData.length; i++) {
     const stockValue =
       Number(
-        portfolioData[i].shares[portfolioData[i].shares.length - 1].price
+        portfolioData[i].sharePrices[portfolioData[i].sharePrices.length - 1]
+          .price
       ) * Number(userShares.get(portfolioData[i].tickerName));
     const entry: DataEntry = {
       name: portfolioData[i] ? portfolioData[i].tickerName : "",
@@ -35,19 +36,11 @@ const createPieChartData = (
   return data;
 };
 
-const formatter = (value: number, name: string, props: any[]) => {
-  let formattedName = name;
-  let formattedValue = "$" + String(value);
-  return [formattedValue, formattedName, props];
-};
-
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const RADIAN = Math.PI / 180;
 
-const StockPieChart: React.FC = () => {
-  const { portfolioData } = usePortfolioData();
-  const { userShares } = useShareData();
+const StockPieChart: FC<ChartProps> = ({ portfolioData, userShares }) => {
   const data = createPieChartData(portfolioData, userShares!);
   return (
     <ResponsiveContainer width={300} height={200}>

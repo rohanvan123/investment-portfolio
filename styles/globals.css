@@ -15,17 +15,3 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-
-.side-nav-bar {
-  position: fixed;
-  top: 0;
-  left: -300px; /* Off-screen by default */
-  width: 300px;
-  height: 100%;
-  background-color: #fff;
-  transition: transform 0.3s ease-out;
-}
-
-.side-nav-bar--active {
-  transform: translateX(0); /* Slide in from the left */
-}

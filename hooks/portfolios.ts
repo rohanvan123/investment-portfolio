@@ -14,7 +14,7 @@ export function usePortfolioData() {
 
       return {
         tickerName: entry["ticker"],
-        shares: shares,
+        sharePrices: shares,
       };
     });
     setPortfolioData(newArr);
@@ -35,4 +35,14 @@ export function useShareData() {
   }, []);
 
   return { userShares };
+}
+
+export function useTickerList() {
+  const [tickerList, setTickerList] = useState<string[]>([]);
+  useEffect(() => {
+    const newArr: string[] = mockData.map((entry) => entry["ticker"]);
+    setTickerList(newArr);
+  }, []);
+
+  return { tickerList };
 }
