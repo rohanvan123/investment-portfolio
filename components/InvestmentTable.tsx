@@ -1,11 +1,7 @@
 import React, { FormEvent, useState } from "react";
-import {
-  usePortfolioData,
-  useShareData,
-  useTickerList,
-} from "@/hooks/portfolios";
 import Downarrow from "./Icons/Downarrow";
-import { postData } from "@/hooks/user";
+import { useShareData, useTickerList, useUserData } from "@/hooks/user";
+import { addNewStock } from "@/utils/utils";
 
 /** Sends a PUT request to the courses-data endpoint
  * @param courseName, the course name inputted by the user
@@ -32,29 +28,30 @@ import { postData } from "@/hooks/user";
 // };
 
 const InvestmentTable = () => {
-  const { portfolioData } = usePortfolioData();
   const { userShares } = useShareData();
   const { tickerList } = useTickerList();
+  const { userData } = useUserData();
 
-  //   const [displayModal, setDisplayModal] = useState(false);
-  //   const [selectedTeacher, setSelectedTeacher] = useState("");
-  //   const [selectedName, setSelectedName] = useState("");
-  //   const [currentID, setCurrentID] = useState(0);
+  const [displayModal, setDisplayModal] = useState(false);
+  const [selectedName, setSelectedName] = useState("");
+  const [selectedShareAmount, setSelectedShareAmount] = useState(0);
 
-  //   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-  //     console.log("clicked");
-  //     event.preventDefault();
-  //     updateCourseData(selectedName, selectedTeacher, currentID);
-  //     window.location.reload();
-  //   };
+  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      await addNewStock(selectedName, selectedShareAmount);
+    } catch (error) {
+      console.log("Error adding stock to table", error);
+    }
+  };
 
   return (
     <div className="border rounded-[10px] overflow-hidden overlay">
-      {/* {displayModal && (
+      {displayModal && (
         <div className="z-10 flex justify-center bg-black">
           <div className="w-[400px] h-[320px] fixed bg-white border-black border-[.5px] rounded-[8px] mt-[50px]">
             <div className="text-[18px] font-semibold font-inter mt-[20px] ml-[20px]">
-              Change Some Information
+              Add a stock
             </div>
             <form
               className="mt-[20px] ml-[20px] w-[360px]"
@@ -65,7 +62,7 @@ const InvestmentTable = () => {
                   className="text-[14px] text-[#344054] font-inter"
                   htmlFor="name"
                 >
-                  Course Name:
+                  Stock
                 </label>
                 <br></br>
                 <input
@@ -79,25 +76,22 @@ const InvestmentTable = () => {
                 ></input>
                 <br></br>
                 <label className="text-[14px] text-[#344054]" htmlFor="teacher">
-                  Teacher:
+                  Number of shares
                 </label>
-                <br></br>
-                <select
+                <input
                   className="w-[297px] h-[40px] mb-[10px] rounded-[8px] border-black border-[.5px]"
-                  value={selectedTeacher}
-                  id="teacher"
-                  required
+                  type="text"
+                  value={selectedShareAmount}
                   onChange={(e) => {
-                    setSelectedTeacher(e.target.value);
+                    // Validate input to allow only numbers using a regular expression
+                    const inputValue = e.target.value;
+                    const numbersOnly = inputValue.replace(/[^\d]/g, "");
+                    setSelectedShareAmount(Number(numbersOnly));
                   }}
-                >
-                  {parsedTeacherData &&
-                    parsedTeacherData.map((teacher: Teacher, key: number) => (
-                      <option key={key} value={getFullName(teacher)}>
-                        {getFullName(teacher)}
-                      </option>
-                    ))}
-                </select>
+                  pattern="\d*"
+                  required
+                ></input>
+                <br></br>
               </div>
               <div className="flex flex-row w-full justify-between mt-[30px] text-[16px] font-inter">
                 <button
@@ -116,7 +110,7 @@ const InvestmentTable = () => {
             </form>
           </div>
         </div>
-      )} */}
+      )}
       <table suppressHydrationWarning className="w-[700px] table-fixed">
         <caption className="bg-white text-center h-[67px]">
           <span className="flex flex-col justify-center h-[67px] ml-[20px] text-[30px] text-[#101828]">
@@ -168,10 +162,12 @@ const InvestmentTable = () => {
             ))}
         </tbody>
       </table>
-      <button className="border-black border-[1px]" onClick={() => postData()}>
-        Upload User Data
+      <button
+        className="w-full h-[60px] hover:bg-gray-300 hover:cursor-pointer"
+        onClick={() => setDisplayModal(true)}
+      >
+        <span className="text-[40px]">+</span>
       </button>
-      <button className="border-black border-[1px]">Retrieve User Data</button>
     </div>
   );
 };

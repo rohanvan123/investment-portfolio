@@ -1,4 +1,6 @@
 import { DataEntry, StockList } from "@/types/types";
+import { getAuth } from "firebase/auth";
+import { getDatabase, push, ref } from "firebase/database";
 
 export const formatDate = (date: string) => {
   const month = date.substring(5, 7);
@@ -70,4 +72,36 @@ export const getMinDataEntry = (arr: DataEntry[]) => {
     min = min > arr[i].value ? arr[i].value : min;
   }
   return min;
+};
+
+export const findUserIdx = (arr: any[], userName: string) => {
+  return arr.findIndex((entry) => entry["firstName"] === userName);
+};
+
+export const addNewStock = (symbol: string, quantity: number) => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  console.log(" adding new stock ");
+
+  if (user) {
+    const uid = user.uid;
+
+    const newStock = {
+      symbol: symbol,
+      quantity: quantity,
+    };
+
+    const db = getDatabase();
+    const shareDataRef = ref(db, `users/${uid}/shareData`);
+
+    push(shareDataRef, newStock)
+      .then(() => {
+        console.log("Stock Added");
+      })
+      .catch((error) => {
+        console.log("Error adding stock ", error);
+      });
+  } else {
+    console.log("user is not signed in");
+  }
 };

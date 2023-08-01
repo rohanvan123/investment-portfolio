@@ -41,7 +41,7 @@ const SideNavBar: FC<SideNavBarProps> = ({
       </div>
       <div className="flex flex-col">
         {links.map((linkObject, idx: number) => (
-          <Link
+          <a
             key={idx}
             className={`w-full h-[100px] flex flex-col items-center justify-center hover:bg-gray-200 ${
               router.asPath == linkObject.link ? "bg-gray-200" : ""
@@ -54,7 +54,7 @@ const SideNavBar: FC<SideNavBarProps> = ({
                 {linkObject.text}
               </span>
             </div>
-          </Link>
+          </a>
         ))}
       </div>
     </div>

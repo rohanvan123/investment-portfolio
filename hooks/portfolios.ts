@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import mockUserData from "../data/user_data.json";
 import { StockDataPoint, StockList } from "@/types/types";
+import { useTickerList } from "./user";
+import { getDateRange } from "@/utils/date";
 
 export function useShareDataTest(tickerList: string[]) {
   const [data, setData] = useState<any[]>();
 
   useEffect(() => {
-    const startDate = "2023-07-21";
-    const endDate = "2023-07-27";
+    const res = getDateRange();
+    const startDate = res[0];
+    const endDate = res[1];
+    console.log(startDate);
+    console.log(endDate);
 
     const fetchShareData = async () => {
       const fetchDataForTicker = async (tickerIndex: number) => {
@@ -54,39 +59,9 @@ export function useShareDataTest(tickerList: string[]) {
   return { data };
 }
 
-export const findUserIdx = (arr: any[], userName: string) => {
-  return arr.findIndex((entry) => entry["firstName"] === userName);
-};
-
-export function useShareData() {
-  const [userShares, setUserShares] = useState<Map<string, number>>();
-  useEffect(() => {
-    const userMap: Map<string, number> = new Map();
-    mockUserData[findUserIdx(mockUserData, "Rohan")]["shareData"].map(
-      (sharePoint) => {
-        userMap.set(sharePoint.symbol, sharePoint.quantity);
-      }
-    );
-    setUserShares(userMap);
-  }, []);
-
-  return { userShares };
-}
-
-export function useTickerList() {
-  const [tickerList, setTickerList] = useState<string[]>([]);
-  useEffect(() => {
-    const newArr: string[] = mockUserData[0]["shareData"].map(
-      (entry) => entry.symbol
-    );
-    setTickerList(newArr);
-  }, []);
-
-  return { tickerList };
-}
-
 export function usePortfolioData() {
   const { data } = useShareDataTest(useTickerList().tickerList);
+  // const { data } = useShareDataTest([]);
   const [portfolioData, setPortfolioData] = useState<StockList[]>([]);
 
   useEffect(() => {
