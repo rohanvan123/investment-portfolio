@@ -30,6 +30,7 @@ const Dashboard = () => {
         <OverviewModule
           portfolioData={portfolioData}
           userShares={userShares!}
+          tickerList={tickerList}
         />
       </div>
     </div>
