@@ -8,10 +8,16 @@ const PortfolioSummary: FC<ChartProps> = ({ portfolioData, userShares }) => {
   const portfolioValue =
     aggregateData.length !== 0
       ? aggregateData[aggregateData.length - 1].value
-      : "0.00";
+      : 0;
   return (
     <div className="w-[100%] text-center mt-[10px]">
-      <span className="text-[60px]">$ {portfolioValue.toLocaleString()}</span>
+      <span className="text-[60px]">
+        ${" "}
+        {portfolioValue.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}
+      </span>
       {aggregateData.length > 1 && (
         <div className="flex flex-row justify-evenly mt-[30px]">
           <DifferentialIndicator

@@ -43,11 +43,14 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
           showNav ? "opacity-40 bg-gray-600" : ""
         }`}
       >
-        <div className="flex flex-row justify-between mt-[25px]">
-          <button className="ml-[25px]" onClick={() => setShowNav(!showNav)}>
+        <div className="flex flex-row justify-between">
+          <button
+            className="ml-[25px] mt-[25px]"
+            onClick={() => setShowNav(!showNav)}
+          >
             <MenuIcon color="black" />
           </button>
-          <button onClick={handleSignOut}>
+          <button onClick={handleSignOut} className="mt-[25px]">
             <span className="bg-blue-600 text-white rounded-md p-2 w-[75px] mr-[25px]">
               Sign Out
             </span>

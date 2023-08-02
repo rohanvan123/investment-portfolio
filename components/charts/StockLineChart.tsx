@@ -1,10 +1,6 @@
-import { ChartProps, DataEntry, StockLineChartProps } from "@/types/types";
-import {
-  getAggregateData,
-  getMaxDataEntry,
-  getMinDataEntry,
-} from "@/utils/utils";
-import React, { FC, use } from "react";
+import { StockLineChartProps } from "@/types/types";
+import { getMaxDataEntry, getMinDataEntry } from "@/utils/utils";
+import React, { FC } from "react";
 import {
   ResponsiveContainer,
   Legend,
@@ -50,7 +46,12 @@ const StockLineChart: FC<StockLineChartProps> = ({
           axisLine={{ stroke: "black", strokeWidth: 2 }}
         />
         <Tooltip
-          formatter={(value: number) => [`$${value.toFixed(2)}`]}
+          formatter={(value: number) => [
+            `$${value.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}`,
+          ]}
           cursor={{ stroke: "black", strokeWidth: 1.5 }}
         />
         <Legend />

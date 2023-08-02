@@ -73,6 +73,7 @@ const InvestmentTable = () => {
                   onChange={(e) => {
                     setSelectedName(e.target.value);
                   }}
+                  placeholder="i.e. AAPL"
                   required
                 ></input>
                 <br></br>
@@ -86,7 +87,8 @@ const InvestmentTable = () => {
                   onChange={(e) => {
                     // Validate input to allow only numbers using a regular expression
                     const inputValue = e.target.value;
-                    const numbersOnly = inputValue.replace(/[^\d]/g, "");
+                    // Validate input to allow only numbers and one decimal point using a regular expression
+                    const numbersOnly = inputValue.replace(/[^\d.]/g, "");
                     setSelectedShareAmount(Number(numbersOnly));
                   }}
                   pattern="\d*"
@@ -102,7 +104,7 @@ const InvestmentTable = () => {
                   Cancel
                 </button>
                 <button
-                  className="w-[170px] h-[44px] bg-[#7F56D9] text-white font-semibold rounded-[8px]"
+                  className="w-[170px] h-[44px] bg-green-600 text-white font-semibold rounded-[8px]"
                   type="submit"
                 >
                   Confirm
