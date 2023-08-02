@@ -1,4 +1,4 @@
-import { ChartProps, DataEntry } from "@/types/types";
+import { ChartProps, DataEntry, StockLineChartProps } from "@/types/types";
 import {
   getAggregateData,
   getMaxDataEntry,
@@ -15,12 +15,6 @@ import {
   YAxis,
   Line,
 } from "recharts";
-
-interface StockLineChartProps {
-  graphData: DataEntry[];
-  chartOffset: number;
-  lineColor: string;
-}
 
 const StockLineChart: FC<StockLineChartProps> = ({
   graphData,

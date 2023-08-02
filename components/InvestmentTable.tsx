@@ -30,7 +30,6 @@ import { addNewStock } from "@/utils/utils";
 const InvestmentTable = () => {
   const { userShares } = useShareData();
   const { tickerList } = useTickerList();
-  const { userData } = useUserData();
 
   const [displayModal, setDisplayModal] = useState(false);
   const [selectedName, setSelectedName] = useState("");
@@ -40,6 +39,8 @@ const InvestmentTable = () => {
     event.preventDefault();
     try {
       await addNewStock(selectedName, selectedShareAmount);
+      setDisplayModal(false);
+      window.location.reload();
     } catch (error) {
       console.log("Error adding stock to table", error);
     }

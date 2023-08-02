@@ -3,6 +3,7 @@ import mockUserData from "../data/user_data.json";
 import { StockDataPoint, StockList } from "@/types/types";
 import { useTickerList } from "./user";
 import { getDateRange } from "@/utils/date";
+import { setUserId } from "firebase/analytics";
 
 export function useShareDataTest(tickerList: string[]) {
   const [data, setData] = useState<any[]>();
@@ -11,8 +12,6 @@ export function useShareDataTest(tickerList: string[]) {
     const res = getDateRange();
     const startDate = res[0];
     const endDate = res[1];
-    console.log(startDate);
-    console.log(endDate);
 
     const fetchShareData = async () => {
       const fetchDataForTicker = async (tickerIndex: number) => {
@@ -49,7 +48,6 @@ export function useShareDataTest(tickerList: string[]) {
         const delayTime = 1000;
         setTimeout(() => fetchSequentially(index + 1), delayTime);
       };
-
       fetchSequentially(0);
     };
 

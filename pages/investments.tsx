@@ -17,13 +17,11 @@ const Investments = () => {
   // }
 
   return (
-    <Layout>
-      <div className="flex flex-row items-center justify-center">
-        <div className="w-[700px]">
-          <InvestmentTable />
-        </div>
+    <div className="flex flex-row items-center justify-center">
+      <div className="w-[700px]">
+        <InvestmentTable />
       </div>
-    </Layout>
+    </div>
   );
 };
 

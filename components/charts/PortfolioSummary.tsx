@@ -11,7 +11,7 @@ const PortfolioSummary: FC<ChartProps> = ({ portfolioData, userShares }) => {
       : "0.00";
   return (
     <div className="w-[100%] text-center mt-[10px]">
-      <span className="text-[60px]">$ {portfolioValue}</span>
+      <span className="text-[60px]">$ {portfolioValue.toLocaleString()}</span>
       {aggregateData.length > 1 && (
         <div className="flex flex-row justify-evenly mt-[30px]">
           <DifferentialIndicator

@@ -1,57 +1,8 @@
 import { useEffect, useState } from "react";
 import { get, getDatabase, ref, set } from "firebase/database";
-import { db } from "@/lib/firebase";
-import { GoogleAuthProvider, User, getAuth } from "firebase/auth";
+import { User, UserProfile, getAuth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { signInWithRedirect } from "firebase/auth/cordova";
-import { UrlWithParsedQuery } from "url";
-import { TrueLiteral } from "typescript";
-
-const testData = {
-  id: 1,
-  firstName: "Rohan",
-  lastName: "Vanjani",
-  userName: "rohanvanj21",
-  creationDate: "2023-07-27",
-  shareData: [
-    { symbol: "GOOG", quantity: 2.3 },
-    { symbol: "AAPL", quantity: 1.6 },
-    { symbol: "BABA", quantity: 2 },
-    { symbol: "TSLA", quantity: 3 },
-  ],
-};
-interface UserProfile {
-  firstName: string;
-  lastName: string;
-  uid: string;
-  email: string;
-  shareData: { symbol: string; quantity: number }[];
-}
-
-const createUserProfile = (user: User) => {
-  console.log("Creating User");
-  const person: UserProfile = {
-    firstName: user.displayName?.split(" ")[0] ?? "",
-    lastName: user.displayName?.split(" ")[1] ?? "",
-    uid: user.uid,
-    email: user.email ?? "",
-    shareData: [],
-  };
-
-  return person;
-};
-
-const buildExistingUserProfile = (data: any) => {
-  const person: UserProfile = {
-    firstName: data.firstName,
-    lastName: data.firstName,
-    uid: data.uid,
-    email: data.email ?? "",
-    shareData: data.shareData ? data : [],
-  };
-
-  return person;
-};
+import { createUserProfile } from "@/utils/utils";
 
 export function useUserData() {
   const [userData, setUserData] = useState<any>();
@@ -89,7 +40,7 @@ export function useShareData() {
   const [userShares, setUserShares] = useState<Map<string, number>>();
   useEffect(() => {
     const userMap: Map<string, number> = new Map();
-    if (userData) {
+    if (userData && userData.shareData) {
       Object.keys(userData?.shareData).forEach((key) => {
         const sharePoint = userData?.shareData[key];
         userMap.set(sharePoint.symbol, sharePoint.quantity);
@@ -106,7 +57,7 @@ export function useTickerList() {
   const [tickerList, setTickerList] = useState<string[]>([]);
   useEffect(() => {
     const newArr: string[] = [];
-    if (userData) {
+    if (userData && userData.shareData) {
       Object.keys(userData?.shareData).forEach((key) => {
         const sharePoint = userData?.shareData[key];
         newArr.push(sharePoint.symbol);

@@ -1,5 +1,5 @@
 import { DataEntry, StockList } from "@/types/types";
-import { getAuth } from "firebase/auth";
+import { User, UserProfile, getAuth } from "firebase/auth";
 import { getDatabase, push, ref } from "firebase/database";
 
 export const formatDate = (date: string) => {
@@ -48,9 +48,9 @@ export const getTickerData = (
 
   for (let i = 0; i < portfolioData[tickerIndex]?.sharePrices.length; i++) {
     let dailyPortfolioSize =
-      portfolioData[0].sharePrices[i].price * tickerShares;
+      portfolioData[tickerIndex].sharePrices[i].price * tickerShares;
     const entry: DataEntry = {
-      name: formatDate(portfolioData[0].sharePrices[i].date),
+      name: formatDate(portfolioData[tickerIndex].sharePrices[i].date),
       value: Number(dailyPortfolioSize.toFixed(2)),
     };
     data.push(entry);
@@ -72,6 +72,19 @@ export const getMinDataEntry = (arr: DataEntry[]) => {
     min = min > arr[i].value ? arr[i].value : min;
   }
   return min;
+};
+
+export const createUserProfile = (user: User) => {
+  console.log("Creating User");
+  const person: UserProfile = {
+    firstName: user.displayName?.split(" ")[0] ?? "",
+    lastName: user.displayName?.split(" ")[1] ?? "",
+    uid: user.uid,
+    email: user.email ?? "",
+    shareData: [],
+  };
+
+  return person;
 };
 
 export const findUserIdx = (arr: any[], userName: string) => {

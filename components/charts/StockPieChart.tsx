@@ -1,4 +1,3 @@
-import { usePortfolioData, useShareData } from "@/hooks/portfolios";
 import { ChartProps, StockList } from "@/types/types";
 import React, { FC, use } from "react";
 import {
