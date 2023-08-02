@@ -1,9 +1,4 @@
-import {
-  ChartProps,
-  DataEntry,
-  StockLineChartProps,
-  StockList,
-} from "@/types/types";
+import { DataEntry, StockList } from "@/types/types";
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import DashboardModule from "./DashboardModule";
 import { getTickerData } from "@/utils/utils";
@@ -37,8 +32,6 @@ const IndividualStockModule: FC<IndividualStockModuleProps> = ({
     setSelectedTicker(newValue);
     setTickerData(getTickerData(portfolioData, userShares, newValue));
   };
-
-  console.log(tickerData);
 
   return (
     <DashboardModule>

@@ -36,6 +36,13 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const handleSignIn = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithRedirect(auth, provider);
+    } catch (error) {}
+  };
+
   return (
     <div className="font-[jaldi] h-screen">
       <main
@@ -50,11 +57,19 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
           >
             <MenuIcon color="black" />
           </button>
-          <button onClick={handleSignOut} className="mt-[25px]">
-            <span className="bg-blue-600 text-white rounded-md p-2 w-[75px] mr-[25px]">
-              Sign Out
-            </span>
-          </button>
+          {userData ? (
+            <button onClick={handleSignOut} className="mt-[25px]">
+              <span className="bg-blue-600 text-white rounded-md p-2 w-[75px] mr-[25px]">
+                Sign Out
+              </span>
+            </button>
+          ) : (
+            <button onClick={handleSignIn} className="mt-[25px]">
+              <span className="bg-blue-600 text-white rounded-md p-2 w-[75px] mr-[25px]">
+                Sign In
+              </span>
+            </button>
+          )}
         </div>
         <div className="text-[30px] mb-[20px] ml-[70px] font-bold">
           {userData ? `Welcome, ${userData.firstName}` : "Loading..."}
