@@ -1,3 +1,6 @@
+Project Hosted Live at [https://investment-portfolio-rohanvan123.vercel.app/dashboard](https://investment-portfolio-rohanvan123.vercel.app/dashboard)
+<img width="1416" alt="Screenshot 2023-11-17 at 11 28 25 AM" src="https://github.com/rohanvan123/investment-portfolio/assets/67704979/1bc753c4-4431-4e8a-8197-cd9885efc7a1">
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
